@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] — Aswinth A.</title>
+    <meta name="description" content="Software engineer building ERP modules, workflow automation and database-driven systems in C#, ASP.NET and SQL Server." />
+    <meta name="author" content="Aswinth A." />
+
+    @* TODO: replace the URL below with your real domain once deployed. *@
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Aswinth A. — Software Engineer" />
+    <meta property="og:description" content="I build the systems businesses run on — and then I automate the parts nobody should have to do by hand." />
+    <meta property="og:url" content="https://your-domain.com" />
+    <meta property="og:image" content="https://your-domain.com/img/og-card.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="~/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Inter+Tight:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="progress" id="progress" aria-hidden="true"></div>
+    <div class="bloom" id="bloom" aria-hidden="true"></div>
+
+    <header class="topbar">
+        <a class="wordmark" href="#top">Aswinth<span class="dot">.</span></a>
+        <nav class="topnav">
+            <a href="#engine" data-spy="engine">Command Engine</a>
+            <a href="#work" data-spy="work">Work</a>
+            <a href="#personal" data-spy="personal">Projects</a>
+            <a href="#experience" data-spy="experience">Experience</a>
+            <a href="#stack" data-spy="stack">Stack</a>
+            <a class="nav-cta" href="#contact">Get in touch</a>
+        </nav>
+    </header>
+
+    <main id="top">
+        @RenderBody()
+    </main>
+
+    <footer class="foot">
+        <div class="foot-inner">
+            <span>Aswinth A. — @DateTime.Now.Year</span>
+            <span class="foot-note">Built with ASP.NET Core Razor Pages &middot; psst — try the arrow keys</span>
+        </div>
+    </footer>
+
+    <a class="to-top" href="#top" id="toTop" aria-label="Back to top">&uarr;</a>
+
+    <div class="term-overlay" id="termOverlay" aria-hidden="true">
+        <div class="term-window" role="dialog" aria-modal="true" aria-label="Hidden terminal">
+            <div class="term-bar">
+                <span class="term-dot term-dot-r"></span>
+                <span class="term-dot term-dot-y"></span>
+                <span class="term-dot term-dot-g"></span>
+                <span class="term-title">aswinth@portfolio: ~</span>
+            </div>
+            <div class="term-body" id="termBody">
+                <div class="term-log" id="termLog"></div>
+                <div class="term-line">
+                    <span class="term-prompt">guest@portfolio:~$</span>
+                    <input type="text" class="term-input" id="termInput" autocomplete="off" spellcheck="false" aria-label="Terminal input" />
+                    <span class="term-caret" id="termCaret"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

@@ -1,0 +1,292 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Software Engineer";
+    var sent = Request.Query["sent"] == "true";
+}
+
+<section class="hero">
+    @if (Model.OpenToWork)
+    {
+        <p class="status-pill" data-rise="1">
+            <span class="pip" aria-hidden="true"></span>
+            Open to opportunities &middot; @Model.Location
+        </p>
+    }
+    <p class="eyebrow" data-rise="2">@Model.Role</p>
+    <h1 class="hero-name" data-split data-rise="3">@Model.Name</h1>
+    <p class="hero-thesis" data-rise="4">@Model.Thesis</p>
+    <div class="hero-actions" data-rise="5">
+        <a class="btn magnetic" href="#engine">Try the Command Engine</a>
+        <a class="btn btn-quiet magnetic" href="@Model.ResumePath" download>Download résumé</a>
+    </div>
+    <div class="hero-links" data-rise="6">
+        @foreach (var link in Model.Links)
+        {
+            <a class="hero-link" href="@link.Href" target="_blank" rel="noopener">
+                <span class="hl-key">@link.Label</span>
+                <span class="hl-val">@link.Value</span>
+            </a>
+        }
+    </div>
+</section>
+
+<section class="section engine-section" id="engine">
+    <div class="section-head">
+        <span class="kicker">Live demo</span>
+        <h2 data-reveal>Write it like you'd say it.</h2>
+        <p class="section-sub" data-reveal>
+            This is the Command Engine, running for real in your browser. It reads a plain sentence and pulls out
+            the project, the event and the date as you type — no form, no dropdowns.
+        </p>
+    </div>
+
+    <div class="engine" data-reveal data-engine>
+        <label class="engine-label" for="scrap">Your note</label>
+        <div class="engine-field">
+            <input type="text"
+                   id="scrap"
+                   class="engine-input"
+                   autocomplete="off"
+                   spellcheck="false"
+                   placeholder="Project 907 customer visit on 20-08-2026" />
+            <span class="caret" id="caret" aria-hidden="true"></span>
+        </div>
+
+        <div class="engine-samples">
+            <span class="samples-label">Try:</span>
+            <button type="button" class="sample" data-sample="Project 412 site inspection tomorrow @@ravi">Project 412 site inspection tomorrow</button>
+            <button type="button" class="sample" data-sample="p88 invoice follow up on 03-09-2026 #urgent">p88 invoice follow up #urgent</button>
+            <button type="button" class="sample" data-sample="Project 1204 quotation review next monday @@team">Project 1204 quotation review next monday</button>
+        </div>
+
+        <div class="engine-out" aria-live="polite">
+            <div class="out-row">
+                <span class="out-key">Project</span>
+                <span class="out-val" id="out-project">—</span>
+            </div>
+            <div class="out-row">
+                <span class="out-key">Event</span>
+                <span class="out-val" id="out-event">—</span>
+            </div>
+            <div class="out-row">
+                <span class="out-key">Date</span>
+                <span class="out-val" id="out-date">—</span>
+            </div>
+            <div class="out-row">
+                <span class="out-key">Tags</span>
+                <span class="out-val" id="out-tags">—</span>
+            </div>
+        </div>
+
+        <p class="engine-foot">
+            In the real thing this writes a structured record straight into SQL Server and links it to the project.
+            <span class="engine-hint">Psst — try the ↑↑↓↓←→←→ konami code anywhere on this page.</span>
+        </p>
+    </div>
+</section>
+
+<section class="section" id="work">
+    <div class="section-head">
+        <span class="kicker">Selected work</span>
+        <h2 data-reveal>Things I've built.</h2>
+    </div>
+
+    @foreach (var item in Model.Work)
+    {
+        <article class="work @(item.Feature ? "work-feature" : "")" data-reveal>
+            <div class="work-side">
+                <span class="work-label">@item.Label</span>
+                <h3 class="work-title">@item.Title</h3>
+                <ul class="stack-list">
+                    @foreach (var tech in item.Stack)
+                    {
+                        <li>@tech</li>
+                    }
+                </ul>
+            </div>
+            <div class="work-body">
+                <p class="work-lede">@item.Lede</p>
+                <ul class="highlights" data-stagger>
+                    @foreach (var highlight in item.Highlights)
+                    {
+                        <li>@highlight</li>
+                    }
+                </ul>
+            </div>
+        </article>
+    }
+</section>
+
+<section class="section" id="personal">
+    <div class="section-head">
+        <span class="kicker">Personal projects</span>
+        <h2 data-reveal>Built for myself.</h2>
+        <p class="section-sub" data-reveal>Things nobody asked for, which is usually where the interesting parts are.</p>
+    </div>
+
+    <div class="pp-grid">
+        @foreach (var project in Model.Personal)
+        {
+            <article class="pp" data-reveal data-tilt>
+                <span class="pp-kicker">@project.Kicker</span>
+                <h3 class="pp-title">@project.Title</h3>
+                <p class="pp-summary">@project.Summary</p>
+                @if (project.Stack.Any())
+                {
+                    <ul class="stack-list pp-stack">
+                        @foreach (var tech in project.Stack)
+                        {
+                            <li>@tech</li>
+                        }
+                    </ul>
+                }
+                @if (!string.IsNullOrEmpty(project.Href))
+                {
+                    <a class="pp-link" href="@project.Href" target="_blank" rel="noopener">View project &rarr;</a>
+                }
+            </article>
+        }
+    </div>
+</section>
+
+<section class="section" id="experience">
+    <div class="section-head">
+        <span class="kicker">Experience</span>
+        <h2 data-reveal>Where I've done it.</h2>
+    </div>
+
+    <div class="timeline">
+        @foreach (var entry in Model.Experience)
+        {
+            <div class="tl-item @(entry.Current ? "tl-current" : "")" data-reveal>
+                <div class="tl-marker" aria-hidden="true"></div>
+                <div class="tl-period">@entry.Period<br /><span class="tl-loc">@entry.Location</span></div>
+                <div class="tl-body">
+                    <h3>@entry.Role <span class="tl-at">at</span> @entry.Company</h3>
+                    <p class="tl-summary">@entry.Summary</p>
+                    <ul class="tl-bullets">
+                        @foreach (var bullet in entry.Bullets)
+                        {
+                            <li>@bullet</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="about-body" data-reveal>
+        <p class="about-lead">@Model.About</p>
+        <p class="about-tail">@Model.About2</p>
+    </div>
+</section>
+
+<section class="section" id="certifications">
+    <div class="section-head">
+        <span class="kicker">Certifications</span>
+        <h2 data-reveal>Things I went and learned on purpose.</h2>
+    </div>
+
+    <div class="cert-grid" data-stagger>
+        @foreach (var cert in Model.Certifications)
+        {
+            <div class="cert">
+                <span class="cert-name">@cert.Name</span>
+                <span class="cert-issuer">@cert.Issuer</span>
+            </div>
+        }
+    </div>
+</section>
+
+<section class="section" id="stack">
+    <div class="section-head">
+        <span class="kicker">Stack</span>
+        <h2 data-reveal>What I work in.</h2>
+    </div>
+
+    <div class="cap-grid">
+        @foreach (var group in Model.Capabilities)
+        {
+            <div class="cap" data-reveal data-tilt>
+                <div class="cap-head">
+                    <h3>@group.Name</h3>
+                    <span class="cap-note">@group.Note</span>
+                </div>
+                <ul class="cap-items" data-stagger>
+                    @foreach (var capability in group.Items)
+                    {
+                        <li>@capability</li>
+                    }
+                </ul>
+            </div>
+        }
+    </div>
+</section>
+
+<section class="section" id="github">
+    <div class="section-head">
+        <span class="kicker">Live</span>
+        <h2 data-reveal>What I've pushed lately.</h2>
+        <p class="section-sub" data-reveal>Pulled straight from GitHub's public API — real commits, not a claim.</p>
+    </div>
+
+    <div class="gh-panel" data-reveal data-github="@Model.GitHubUsername">
+        <div class="gh-loading" id="ghLoading">
+            <span class="gh-dot"></span><span class="gh-dot"></span><span class="gh-dot"></span>
+        </div>
+        <ul class="gh-list" id="ghList" hidden></ul>
+        <p class="gh-empty" id="ghEmpty" hidden>
+            Connect a GitHub username in <code>Index.cshtml.cs</code> to light this up.
+        </p>
+    </div>
+</section>
+
+<section class="section contact" id="contact">
+    <div class="section-head">
+        <span class="kicker">Contact</span>
+        <h2 data-reveal>Let's talk.</h2>
+        <p class="section-sub" data-reveal>Open to opportunities and collaborations — tell me what you're building.</p>
+    </div>
+
+    <div class="contact-grid">
+        <div class="contact-wrap" data-reveal>
+            @if (sent)
+            {
+                <p class="sent">Message received. I'll get back to you.</p>
+            }
+            <form method="post" class="form">
+                <label>
+                    <span class="form-key">Name</span>
+                    <input type="text" name="name" placeholder="Your name" required />
+                </label>
+                <label>
+                    <span class="form-key">Email</span>
+                    <input type="email" name="email" placeholder="name@company.com" required />
+                </label>
+                <label class="wide">
+                    <span class="form-key">Message</span>
+                    <textarea name="message" rows="5" placeholder="What are you working on?" required></textarea>
+                </label>
+                <button type="submit" class="btn btn-send magnetic">Send message</button>
+            </form>
+        </div>
+
+        <aside class="contact-side" data-reveal>
+            <span class="side-key">Or reach me directly</span>
+            <ul class="side-links">
+                @foreach (var link in Model.Links)
+                {
+                    <li>
+                        <a href="@link.Href" target="_blank" rel="noopener">
+                            <span class="sl-label">@link.Label</span>
+                            <span class="sl-val">@link.Value</span>
+                            <span class="sl-arrow" aria-hidden="true">&rarr;</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+            <a class="side-resume" href="@Model.ResumePath" download>Download résumé (PDF)</a>
+        </aside>
+    </div>
+</section>
