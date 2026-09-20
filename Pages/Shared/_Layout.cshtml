@@ -26,8 +26,11 @@
     <div class="bloom" id="bloom" aria-hidden="true"></div>
 
     <header class="topbar">
-        <a class="wordmark" href="#top">Aswinth<span class="dot">.</span></a>
-        <nav class="topnav">
+        <a class="wordmark" href="#top" id="wordmark">Aswinth<span class="dot">.</span></a>
+        <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="topnav">
+            <span></span><span></span><span></span>
+        </button>
+        <nav class="topnav" id="topnav">
             <a href="#engine" data-spy="engine">Command Engine</a>
             <a href="#work" data-spy="work">Work</a>
             <a href="#personal" data-spy="personal">Projects</a>
@@ -63,6 +66,7 @@
                 <div class="term-line">
                     <span class="term-prompt">guest@portfolio:~$</span>
                     <input type="text" class="term-input" id="termInput" autocomplete="off" spellcheck="false" aria-label="Terminal input" />
+                    <button type="button" class="term-send" id="termSend" aria-label="Run command">&#9166;</button>
                     <span class="term-caret" id="termCaret"></span>
                 </div>
             </div>

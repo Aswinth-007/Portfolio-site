@@ -564,6 +564,21 @@
             if (e.target === overlay) { closeTerm(); }
         });
 
+        var wordmark = document.getElementById('wordmark');
+        if (wordmark) {
+            var tapCount = 0;
+            var tapTimer = null;
+            wordmark.addEventListener('click', function () {
+                tapCount++;
+                clearTimeout(tapTimer);
+                tapTimer = setTimeout(function () { tapCount = 0; }, 2200);
+                if (tapCount >= 5) {
+                    tapCount = 0;
+                    openTerm();
+                }
+            });
+        }
+
         window.addEventListener('keydown', function (e) {
             if (open) { return; }
             var expected = KONAMI[progressIdx];
@@ -647,6 +662,44 @@
                 termInput.value = '';
                 run(val);
             }
+        });
+
+        var termSend = document.getElementById('termSend');
+        if (termSend) {
+            termSend.addEventListener('click', function () {
+                var val = termInput.value;
+                termInput.value = '';
+                run(val);
+                termInput.focus();
+            });
+        }
+    })();
+
+    /* =========================================================
+       Mobile nav — hamburger toggle
+       ========================================================= */
+
+    (function mobileNav() {
+        var toggle = document.getElementById('navToggle');
+        var nav = document.getElementById('topnav');
+        if (!toggle || !nav) { return; }
+
+        function close() {
+            nav.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+        }
+
+        toggle.addEventListener('click', function () {
+            var open = nav.classList.toggle('open');
+            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+
+        nav.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', close);
+        });
+
+        window.addEventListener('resize', function () {
+            if (window.innerWidth > 680) { close(); }
         });
     })();
 })();

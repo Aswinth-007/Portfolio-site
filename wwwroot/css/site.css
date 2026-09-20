@@ -140,6 +140,46 @@ body {
     color: var(--bone);
 }
 
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    background: transparent;
+    border: 1px solid var(--hair-strong);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.nav-toggle span {
+    display: block;
+    height: 2px;
+    width: 18px;
+    margin: 0 auto;
+    background: var(--bone);
+    transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+.nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.term-send {
+    display: none;
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    border: 1px solid var(--hair-strong);
+    background: transparent;
+    color: var(--amber);
+    font-size: 14px;
+    cursor: pointer;
+}
+
 /* ---------- Scroll progress ---------- */
 
 .progress {
@@ -1452,15 +1492,59 @@ input:focus-visible {
 @media (max-width: 680px) {
     :root { --gutter: 20px; }
 
+    .nav-toggle {
+        display: flex;
+    }
+
     .topbar {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
+        position: relative;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
     }
 
     .topnav {
-        gap: 14px;
-        flex-wrap: wrap;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 6px 20px 16px;
+        background: rgba(13, 16, 23, 0.97);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--hair);
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: max-height 0.32s cubic-bezier(0.2, 0.9, 0.25, 1), opacity 0.25s ease;
+    }
+
+    .topnav.open {
+        max-height: 400px;
+        opacity: 1;
+    }
+
+    .topnav a {
+        padding: 12px 0;
+        border-bottom: 1px solid var(--hair);
+        font-size: 15px;
+    }
+
+    .topnav a:last-child {
+        border-bottom: none;
+    }
+
+    .nav-cta {
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .term-send {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .hero {
