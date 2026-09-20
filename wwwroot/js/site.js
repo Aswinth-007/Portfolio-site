@@ -602,6 +602,7 @@
                 line('  projects              jump to projects');
                 line('  contact               jump to contact');
                 line('  ls                    list sections on this page');
+                line('  scan                  run a fake port scan of this page');
                 line('  sudo make me a sandwich   try it');
                 line('  clear                 clear the screen');
                 line('  exit                  close this terminal');
@@ -612,6 +613,28 @@
             },
             ls: function () {
                 line('#engine  #work  #personal  #experience  #certifications  #stack  #github  #contact', 'out-line');
+            },
+            scan: function () {
+                line('scanning target: this-portfolio ...', 'out-line');
+                var rows = [
+                    '8080/tcp  open   work.engine',
+                    '8081/tcp  open   personal.projects',
+                    '8082/tcp  open   experience.log',
+                    '8083/tcp  open   certifications.db',
+                    '8084/tcp  open   contact.smtp (unverified)'
+                ];
+                var i = 0;
+                var step = function () {
+                    if (i === 0) { line('PORT       STATE  SERVICE', 'out-line'); }
+                    if (i < rows.length) {
+                        line(rows[i], 'out-line');
+                        i++;
+                        setTimeout(step, 180);
+                    } else {
+                        line('scan complete — 5 ports open. no real vulnerabilities found (probably).', 'out-line');
+                    }
+                };
+                setTimeout(step, 260);
             },
             projects: function () {
                 line('jumping to projects...', 'out-line');
